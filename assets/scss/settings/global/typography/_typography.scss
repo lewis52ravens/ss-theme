@@ -28,6 +28,11 @@ $fontFamily-headings:           stencilFontFamily("headings-font"), Arial, Helve
 
 $fontFamily-hero:               stencilFontFamily("headings-font"), Arial, Helvetica, sans-serif;
 
+// Bootstrap overrides
+// -----------------------------------------------------------------------------
+
+$font-family-sans-serif:        stencilFontFamily("body-font"), Arial, Helvetica, sans-serif;
+$headings-font-family:          stencilFontFamily("headings-font"), Arial, Helvetica, sans-serif;
 
 // Font sizes
 // -----------------------------------------------------------------------------

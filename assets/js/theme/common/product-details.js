@@ -1,4 +1,4 @@
-import utils from '@bigcommerce/stencil-utils';
+import utils, { hooks } from '@bigcommerce/stencil-utils';
 import ProductDetailsBase, { optionChangeDecorator } from './product-details-base';
 import 'foundation-sites/js/foundation/foundation';
 import 'foundation-sites/js/foundation/foundation.reveal';
@@ -11,6 +11,8 @@ import forms from '../common/models/forms';
 import { normalizeFormData } from './utils/api';
 import { isBrowserIE, convertIntoArray } from './utils/ie-helpers';
 import bannerUtils from './utils/banner-utils';
+import { setTimeout } from 'core-js';
+import AddonList from '../product/addon-list';
 
 export default class ProductDetails extends ProductDetailsBase {
     constructor($scope, context, productAttributesData = {}) {
@@ -212,14 +214,16 @@ export default class ProductDetails extends ProductDetailsBase {
         });
 
         let productVariant = unsatisfiedRequiredFields.length === 0 ? options.sort().join(', ') : 'unsatisfied';
-        const view = $('.productView');
+        const view = $('.mcd-product-view');
+        //const view = $('.productView');
 
         if (productVariant) {
             productVariant = productVariant === 'unsatisfied' ? '' : productVariant;
             if (view.attr('data-event-type')) {
                 view.attr('data-product-variant', productVariant);
             } else {
-                const productName = view.find('.productView-title')[0].innerText.replace(/"/g, '\\$&');
+                const productName = view.find('.mcd-productView-title')[0].innerText.replace(/"/g, '\\$&');
+                //const productName = view.find('.productView-title')[0].innerText.replace(/"/g, '\\$&');
                 const card = $(`[data-name="${productName}"]`);
                 card.attr('data-product-variant', productVariant);
             }
@@ -397,6 +401,34 @@ export default class ProductDetails extends ProductDetailsBase {
 
         this.$overlay.show();
 
+        const addonList = new AddonList();
+        //let addonList = [];
+        const $freeAddon = $('#freeAddOnSelect');
+        if ($freeAddon.length > 0) {
+            const freeAddProduct = $freeAddon.first().val();
+            if (freeAddProduct != '') {
+                addonList.addItem({
+                    amount: 1,
+                    id: freeAddProduct
+                });
+            }
+        }
+
+        const $addtAddons = $('#additionalAddOns');
+        if ($addtAddons.length > 0) {
+            $addtAddons.first().children('.mcd-addon-line').each( (index, element) => {
+                let $addonCheckBox = $(element).find('[type="checkbox"]:checked');
+                //let $addonCheckBox = $(this).find('[type="checkbox"]');
+                if ($addonCheckBox.length > 0) {
+                    let addonItem = {
+                        amount: $(`#${$addonCheckBox.data('addonCounter')}`).val(),
+                        id: $addonCheckBox.data('entityId')
+                    };
+                    addonList.addItem(addonItem);
+                }
+            });
+        }
+        
         // Add item to cart
         utils.api.cart.itemAdd(normalizeFormData(new FormData(form)), (err, response) => {
             const errorMessage = err || response.data.error;
@@ -420,24 +452,55 @@ export default class ProductDetails extends ProductDetailsBase {
                 return showAlertModal(tmp.textContent || tmp.innerText);
             }
 
-            // Open preview modal and update content
-            if (this.previewModal) {
-                this.previewModal.open();
+            function addAddOn(addonItem, cleanUp) {
+                const addon = addonItem.item;
+                let fd = new FormData();
+                fd.set('action', 'add');
+                fd.set('product_id', addon.id);
+                fd.set('qty[]', addon.amount);
+                console.log("Adding on item: " + addonItem.item.id);
 
-                if (window.ApplePaySession) {
-                    this.previewModal.$modal.addClass('apple-pay-supported');
+                function makeCallBack(item, _cleanUp) {
+                    return function(err, response) {
+                        console.log("Callback running for item: " + item.item.id);
+                        const errorMessage = err || response.data.error;
+                        if (errorMessage) {
+                            console.log('Error adding product: ' + item.item.id);
+                            const tmp = document.createElement('DIV');
+                            tmp.innerHTML = errorMessage;
+
+                            return showAlertModal(tmp.textContent || tmp.innerText);
+                        }
+                        if (item.hasNextItem()) {
+                            return addAddOn(item.nextItem, cleanUp);
+                        } else {
+                            _cleanUp(response);
+                        }
+                    }
                 }
-
-                if (!this.checkIsQuickViewChild($addToCartBtn)) {
-                    this.previewModal.$preModalFocusedEl = $addToCartBtn;
-                }
-
-                this.updateCartContent(this.previewModal, response.data.cart_item.id);
-            } else {
-                this.$overlay.show();
-                // if no modal, redirect to the cart page
-                this.redirectTo(response.data.cart_item.cart_url || this.context.urls.cart);
+                return utils.api.cart.itemAdd(fd, makeCallBack(addonItem, cleanUp));
             }
+
+            addAddOn(addonList.firstItem, (response) => {
+                // Open preview modal and update content
+                if (this.previewModal) {
+                    this.previewModal.open();
+
+                    if (window.ApplePaySession) {
+                        this.previewModal.$modal.addClass('apple-pay-supported');
+                    }
+
+                    if (!this.checkIsQuickViewChild($addToCartBtn)) {
+                        this.previewModal.$preModalFocusedEl = $addToCartBtn;
+                    }
+
+                    this.updateCartContent(this.previewModal, response.data.cart_item.id);
+                } else {
+                    this.$overlay.show();
+                    // if no modal, redirect to the cart page
+                    this.redirectTo(response.data.cart_item.cart_url || this.context.urls.cart);
+                }
+            });
         });
 
         this.setLiveRegionAttributes($addToCartBtn.next(), 'status', 'polite');
@@ -532,5 +595,56 @@ export default class ProductDetails extends ProductDetailsBase {
     updateProductAttributes(data) {
         super.updateProductAttributes(data);
         this.showProductImage(data.image);
+    }
+
+    addToCurrentPrice(amount) {
+        this.additionalPrice = amount;
+        /**
+        const viewModel = this.getViewModel(this.$scope);
+        const $priceSpan = viewModel.$priceWithTax.length > 0 ? viewModel.$priceWithTax : viewModel.$priceWithoutTax;
+        const $priceProp = $priceSpan.parent().children("[itemprop='priceSpecification']").first();
+        const priceString = $priceProp.children("[itemprop='price']").first().attr('content');
+        const originalPrice = parseFloat(priceString);
+        const newPrice = originalPrice + amount;
+        const priceFormatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'}).format(newPrice);
+        var price = {};
+        const priceVal = {
+            currency: "USD",
+            formatted: priceFormatted,
+            value: newPrice
+        };
+        if (viewModel.$priceWithTax.length > 0) {
+            price.with_tax = priceVal;
+        } else {
+            price.without_tax = priceVal;
+        }
+        this.updatePriceView(viewModel, price);
+        */
+    }
+
+    addExtraItemsToCart(addons, cartId) {
+        var lineItems = [];
+        addons.forEach(addon => {
+            lineItems.push({
+                "productId": addon.id,
+                "quantity": addon.amount
+            });
+        });
+        const data = JSON.stringify({
+            "lineItems": lineItems
+        });
+
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", `https://stone-and-seed/api/storefront/carts/${cartId}/items?include=lineItems.physicalItems.options`);
+        xhr.setRequestHeader('content-type', 'application/json');
+
+        xhr.send(data);
     }
 }

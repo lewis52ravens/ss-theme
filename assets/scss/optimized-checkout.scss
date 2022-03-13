@@ -28,6 +28,15 @@
     border-color: stencilColor("optimizedCheckout-header-borderColor");
     color: stencilColor("optimizedCheckout-header-textColor");
 
+    .checkoutHeader-heading {
+        display: flex;
+        justify-content: center;
+
+        .checkoutHeader-logo {
+            max-height: 100px;
+        }
+    }
+
     //
     // TODO:
     // Configure media query to be 'desktop' breakpoint size

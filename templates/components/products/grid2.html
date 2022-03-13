@@ -1,0 +1,10 @@
+<div class="container mcd-product-grid {{#unless theme_settings.mcd_show_product_sort}}pt-4{{/unless}}">
+    <ul class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
+        {{log products}}
+        {{#each products}}
+            <li class="col mcd-product">
+                {{>components/products/card2 settings=../settings show_compare=../show_compare show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event=../event position=(add @index 1) price_style=../theme_settings.mcd_price_dispay}}
+            </li>
+        {{/each}}
+    </ul>
+</div>

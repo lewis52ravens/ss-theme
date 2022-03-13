@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-md navbar-light position-fixed top-0 w-100">
+    <div class="container-fluid">
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand mcd-nav-logo mx-auto" href="{{urls.home}}">
+            <img class="mx-auto img-thumbnail" height="24" width="42"
+                src="{{getImage settings.store_logo.image 'logo_size'}}"
+                alt="{{settings.store_logo.title}}"
+                title="{{settings.store_logo.title}}" />
+        </a>
+        {{!-- TODO: make cart button link to cart page on mobile --}}
+        <a class="btn bg-light mcd-collapsed-only" role="button" href="{{urls.cart}}">
+            <i class="bi bi-cart" aria-hidden="true"></i>
+            <span class="visually-hidden">Cart</span>
+            <span class="badge rounded-pill bg-secondary mcdesign-cart-quantity position-absolute" aria-label="quantity"></span>
+        </a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
+            <ul class="navbar-nav">
+                {{#if theme_settings.mcdesign_show_social_media}}
+                    {{#if theme_settings.mcdesign_social_header_location '===' 'left'}}
+                        {{> components/common/social-links2}}
+                        <div class="vr mcd-expanded-only"></div>
+                    {{/if}}
+                {{/if}}
+                {{!-- If we ever want to enable gift certificates, this is where the menu option for them would go --}}
+                {{#if customer}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{urls.account.index}}">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{urls.auth.logout}}">Logout</a>
+                    </li>
+                {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{urls.auth.login}}">Sign in</a>
+                    </li>
+                    {{#if settings.account_creation_enabled}}
+                        <span class="navbar-text mcd-expanded-only">or</span>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{urls.auth.create_account}}">Register</a>
+                        </li>
+                    {{/if}}
+                {{/if}}
+                {{> components/common/cart-dropdown2}}
+                {{#if theme_settings.mcdesign_show_social_media}}
+                    {{#if theme_settings.mcdesign_social_header_location '===' 'right'}}
+                        <div class="vr mcd-expanded-only"></div>
+                        {{> components/common/social-links2}}
+                    {{/if}}
+                {{/if}}
+                <div class="mcd-collapsed-only">
+                    <hr class="my-2" />
+                    {{#each categories}}
+                        <li class="nav-item">
+                            <a class="nav-link link-dark {{#if is_active}} active{{/if}}" href="{{url}}" aria-label="{{name}}">{{uppercase name}}</a>
+                        </li>
+                    {{/each}}
+                    {{#unless theme_settings.hide_content_navigation}}
+                        {{#each pages}}
+                            <li class="nav-item">
+                                <a class="nav-link link-dark {{#if name '==' ../page.title}} active{{/if}}" href="{{url}}" aria-label="{{name}}">{{uppercase name}}</a>
+                            </li>
+                        {{/each}}
+                    {{/unless}}
+                </div>
+            </ul>
+            <form class="d-flex me-2">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

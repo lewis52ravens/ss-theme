@@ -1,0 +1,31 @@
+{{!-- 
+slide (int): index
+active (bool): isFirst
+label_location (string)
+content (object)
+--}}
+
+<div class="carousel-item {{#if active}}active{{/if}}">
+    {{#if active}}
+        {{> components/common/responsive-img
+            image=content.stencil_image
+            class="d-block w-100 h-20"
+            fallback_size='1280w'
+            lazyload='disabled'
+            otherAttributes="alt='{{content.alt_text}}'"
+        }}
+    {{else}}
+        {{> components/common/responsive-img
+            image=content.stencil_image
+            class="d-block w-100"
+            fallback_size='1280w'
+            lazyload='lazyload'
+            otherAttributes="alt='{{content.alt_text}}'"
+        }}
+    {{/if}}
+    <div class="mcd-carousel-content mcd-carousel-content__{{label_location}}">
+        <h1 class="mcd-carousel-header">{{content.heading}}</h5>
+        <p class="mcd-carousel-text">{{content.text}}</p>
+        <a class="btn btn-secondary mcd-carousel-button" role="button" href="{{content.url}}">{{content.button_text}}</a>
+    </div>
+</div>

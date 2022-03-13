@@ -1,0 +1,67 @@
+<div class="container mcd-product-view">
+    {{log "logging product:"}}
+    {{log product}}
+    <div class="row row-cols-1 row-cols-lg-2 mcd-product-row">
+        <div class="col">
+            <section class="mcd-product-images mt-3 d-flex justify-content-center">
+                {{> components/common/responsive-img
+                    image=product.main_image
+                    class="h-100"
+                    fallback_size=theme_settings.product_size
+                    lazyload=theme_settings.lazyload_mode
+                    default_image=theme_settings.default_image_product
+                }}
+                {{!--<img src="{{product.main_image.data}}" alt="{{product.main_image.alt}}" height="400" width="300"/>--}}
+            </section>
+        </div>
+        <main class="col">
+            <h1 class="mcd-productView-title" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
+            {{product.detail_messages}}
+            <form class="mcd-product-form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data" data-cart-item-add>
+                <input type="hidden" name="action" value="add" />
+                <input type="hidden" name="product_id" value="{{product.id}}" />
+                <div data-product-option-change>
+                    {{log 'logging options:'}}
+                    {{#each product.options}}
+                        {{log this}}
+                        {{#if display_name '==' 'Add ons'}}
+                            {{log 'Add ons context:'}}
+                            {{log ../this}}
+                            {{> components/products/mcdOptions/addons}}
+                        {{else}}
+                            {{{dynamicComponent 'components/products/mcdOptions'}}}
+                        {{/if}}
+                    {{/each}}
+                </div>
+                <div class="row">
+                    <label for="quantity" class="col-4 col-form-label">Quantity</label>
+                    <input type="number" class="col-2" id="quantity" name="product quantity" min="1" max="15" value="1"/>
+                </div>
+                <div class="row">
+                    <output class="h3 my-2 ms-2" name="total price" for="quantity">{{> components/products/price price=product.price schema_org=schema}}</output>
+                </div>
+                <div class="row">
+                    <div class="form-action">
+                        <input
+                            id="form-action-addToCart"
+                            data-wait-message="{{lang 'products.adding_to_cart'}}"
+                            class="btn btn-secondary"
+                            type="submit"
+                            value="Add To Cart"
+                        />
+                    </div>
+                </div>
+
+            </form>
+        </main>
+        <div class="col">
+            <article class="mcd-product-description" {{#if schema}} itemprop="description"{{/if}}>
+                {{#if theme_settings.show_product_details_tabs}}
+                    {{> components/products/description-tabs}}
+                {{else}}
+                    {{> components/products/description2}}
+                {{/if}}
+            </article>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="row row-cols-1 pb-1" data-product-attribute="textarea">
+    <label class="col-form-label col" for="attribute_textarea_{{id}}">
+        {{display_name}}
+    </label>
+    <textarea class="form-control" id="attribute_textarea_{{id}}" name="attribute[{{id}}]"
+    {{#if required}}required{{/if}}
+    {{#if max_length}}maxlength={{max_length}}{{/if}}
+    rows="4"
+    {{#if prefill}}placeholder="{{prefill}}"{{/if}}></textarea>
+</div>

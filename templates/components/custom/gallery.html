@@ -1,0 +1,24 @@
+<div class="container mcd-gallery mt-3">
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <div class="elfsight-app-9e5212a2-45f0-4d14-85d5-407ccc699973"></div>
+</div>
+{{!--
+<div class="container mcd-gallery mt-3 border border-dark border-5">
+    {{#for 1 rows}}
+        <div class="row mcd-gallery-row">
+            {{#for 1 ../columns}}
+                <div class="col mcd-gallery-col border">
+                    
+                    {{> components/common/responsive-img
+                        image=(getContentImage (concat (concat "gallery_img_" (multiply $index ../$index)) ".png"))
+                        class=""
+                        fallback_size='100w'
+                    }}
+                    
+                    <img src={{getContentImage (get 'string' (concat (concat "gallery_img_" (multiply $index ../$index)) ".png"))}} alt="image" />
+                </div>
+            {{/for}}
+        </div>
+    {{/for}}
+</div>
+--}}

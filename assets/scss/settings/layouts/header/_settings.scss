@@ -2,10 +2,15 @@
 // HEADER (Settings)
 // =============================================================================
 
-$header-bg:                                 stencilColor("header-backgroundColor");
-$header-height:                             55px;
+$header-bg-dark:                            lighten(stencilColor("mcdesign_alt_color_2"), 15);
+$header-bg-light:                           lighten(stencilColor("mcdesign_primary_light"), 10%);
+$header-height:                             100px;
 $header-toggle-width:                       $header-height;
 $header-logo-marginVertical:                spacing("half");
 $header-logo-paddingVertical:               $header-logo-marginVertical;
+$header-collapse-point:                      "md";
 
-$storeName-color:                           stencilColor("storeName-color");
+$storeName-color:                           stencilColor("mcdesign_alt_color_1");
+//$storeName-color:                           stencilColor("storeName-color");
+
+$header-marginTop:                          spacing("single") + spacing("half");

@@ -30,8 +30,8 @@
                     {{> components/common/social-links}}
             </article>
         {{/if}}
-        <section class="footer-info">
-            <article class="footer-info-col footer-info-col--small" data-section-type="footer-webPages">
+        <section class="footer-info row">
+            <article class="col footer-info-col footer-info-col--small" data-section-type="footer-webPages">
                 <h3 class="footer-info-heading">{{lang 'footer.navigate'}}</h3>
                 <ul class="footer-info-list">
                     {{#each pages}}
@@ -45,7 +45,7 @@
                 </ul>
             </article>
 
-            <article class="footer-info-col footer-info-col--small" data-section-type="footer-categories">
+            <article class="col footer-info-col footer-info-col--small" data-section-type="footer-categories">
                 <h3 class="footer-info-heading">{{lang 'footer.categories'}}</h3>
                 <ul class="footer-info-list">
                     {{#each categories}}
@@ -57,7 +57,7 @@
             </article>
 
             {{#and theme_settings.shop_by_brand_show_footer shop_by_brand.length}}
-            <article class="footer-info-col footer-info-col--small" data-section-type="footer-brands">
+            <article class="col footer-info-col footer-info-col--small" data-section-type="footer-brands">
                 <h3 class="footer-info-heading">{{lang 'footer.brands'}}</h3>
                 <ul class="footer-info-list">
                     {{#each shop_by_brand}}
@@ -71,7 +71,7 @@
             {{/and}}
 
             {{#if settings.address}}
-            <article class="footer-info-col footer-info-col--small" data-section-type="storeInfo">
+            <article class="col footer-info-col footer-info-col--small" data-section-type="storeInfo">
                 <h3 class="footer-info-heading">{{lang 'footer.info'}}</h3>
                 <address>{{nl2br settings.address}}</address>
                 {{#if settings.phone_number}}
@@ -80,12 +80,14 @@
             </article>
             {{/if}}
 
-            <article class="footer-info-col" data-section-type="newsletterSubscription">
-                {{#if settings.show_newsletter_box}}
+            {{#if settings.show_newsletter_box}}
+                <article class="col footer-info-col" data-section-type="newsletterSubscription">
                     {{> components/common/subscription-form}}
-                {{/if}}
-                {{> components/common/payment-icons}}
-            </article>
+                </article>
+            {{/if}}
+
+            {{> components/common/payment-icons}}
+
         </section>
         {{#if settings.paypal_commerce_credit_message}}
         <div class="footer-copyright">

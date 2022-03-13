@@ -1,85 +1,40 @@
-<div class="previewCartWrapper">
-  <div class="previewCart">
-    {{#if cart.items.length}}
-        <ul class="previewCartList">
-            {{#each (limit cart.items 4)}}
-                <li class="previewCartItem">
-                    <div class="previewCartItem-image">
-                        {{#if type '==' 'GiftCertificate'}}
-                            <img
-                                alt="GiftCertificate"
-                                title="GiftCertificate"
-                                src="{{cdn ../theme_settings.default_image_gift_certificate}}"
-                            >
-                        {{else}}
-                            {{> components/common/responsive-img
-                                image=image
-                                fallback_size=../theme_settings.productthumb_size
-                                lazyload=../theme_settings.lazyload_mode
-                                default_image=../theme_settings.default_image_product
-                            }}
-                        {{/if}}
-                    </div>
-                        <div class="previewCartItem-content">
-                            <span class="previewCartItem-brand">
-                                {{brand.name}}
-                            </span>
-
-                            <h6 class="previewCartItem-name">
-                                <a href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
-                            </h6>
-
-                            <span class="previewCartItem-price">
-                                {{#if quantity '>' 1}}
-                                    {{quantity}} &times;
-                                {{/if}}
-                                {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
-                                    <span{{#if price_discounted}} class="price--discounted"{{/if}}>{{price.formatted}}</span>
-                                    {{#if price_discounted}}
-                                        {{price_discounted.formatted}}
-                                    {{/if}}
-                                {{else}}
-                                    {{> components/common/login-for-pricing}}
-                                {{/or}}
-                            </span>
-                        </div>
-                    </li>
-                {{/each}}
-            </ul>
-            <div class="previewCartAction">
-                {{#if cart.show_primary_checkout_button}}
-                    <div class="previewCartAction-checkout">
-                        <a href="{{urls.checkout.single_address}}" class="button button--small button--primary">
-                            {{lang 'cart.preview.checkout_now'}}
-                        </a>
-                    </div>
-                {{/if}}
-
-                <div class="previewCartAction-viewCart{{#unless cart.show_primary_checkout_button}} previewCartAction-viewCart--sole{{/unless}}">
-                    <a href="{{urls.cart}}" class="button button--small button--action">
-                        {{lang 'cart.preview.view_cart'}}
-                    </a>
-                </div>
-
-                {{#if cart.show_multiple_address_shipping}}
-                    <div class="previewCartAction-checkoutMultiple">
-                        <a href="{{urls.checkout.multiple_address}}">
-                            {{lang 'cart.preview.checkout_multiple'}}
-                        </a>
-                    </div>
-                {{/if}}
+{{#if cart.items.length}}
+    {{#each (limit cart.items 4)}}
+        {{> components/common/cart-dropdown-item2 product=this}}
+    {{/each}}
+    {{#if cart.items.length ">" 4}}
+        <li>
+            <div class="d-flex justify-content-center">
+                <i class="bi bi-three-dots"></i>
             </div>
-            {{#if cart.additional_checkout_buttons}}
-                <div class="previewCart-additionalCheckoutButtons">
-                    {{#each cart.additional_checkout_buttons}}
-                        {{{this}}}
-                    {{/each}}
-                </div>
-            {{/if}}
-        {{else}}
-            <div role="alert" aria-live="polite" aria-atomic="false" class="previewCart-emptyBody">
-                {{lang 'cart.checkout.empty_cart'}}
+        </li>
+    {{/if}}
+    <li><hr class="dropdown-divider" /></li>
+    <li>
+        <div class="row g-0 px-1">
+            <div class="col-md-2 col-lg-4"></div>
+            <div class="col-md-4 me-auto">
+                <p class="fs-5">Subtotal:</h4>
             </div>
-        {{/if}}
-    </div>
-</div>
+            <div class="col-md-3 pe-1">
+                <p class="fs-5 text-primary">{{cart.sub_total.formatted}}</p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-evenly">
+            <a class="btn btn-primary text-nowrap" href="{{urls.checkout.single_address}}">Check out</a>
+            <a class="btn btn-secondary text-nowrap" href="{{urls.cart}}">View Cart</a>
+        </div>
+    </li>
+    {{#if cart.additional_checkout_buttons.length}}
+        {{log cart.additional_checkout_buttons.length}}
+        <li><hr class="dropdown-divider" /></li>
+        <div class="d-flex justify-content-center">
+            {{#each cart.additional_checkout_buttons}}
+                {{{this}}}
+            {{/each}}
+        </div>
+    {{/if}}
+
+{{else}}
+    <p class="p-4 text-muted">Cart is empty</p>
+{{/if}}

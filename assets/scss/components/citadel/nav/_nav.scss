@@ -9,6 +9,7 @@
 // 1. Remove the margin-left we add to default lists.
 //
 // -----------------------------------------------------------------------------
+.citadel {
 
 .navList,
 .navBar {
@@ -140,4 +141,6 @@
             color: stencilColor("color-textSecondary--hover");
         }
     }
+}
+
 }

@@ -1,0 +1,93 @@
+.mcd-carousel {
+    height: calc(70vh - #{$header-height});
+    //background-color: stencilColor("mcdesign_alt_color_1");
+    padding-top: 1rem;
+    @include media-breakpoint-down("sm") {
+        padding-top: 0.25rem;
+    }
+    
+    .carousel-item {
+       
+       img {
+           object-fit: scale-down;
+           height: calc(70vh - #{$header-height});
+           width: auto;
+           @include media-breakpoint-down("md") {
+                position: absolute;
+                top: 0%;
+           }
+       }
+
+       .mcd-carousel-content {
+           min-width: 30%;
+           height: min-content;
+           position: absolute;
+           background-color: scale-color($color: stencilColor("mcdesign_primary_light"), $alpha: -30%);
+           color: stencilColor("mcdesign_primary_dark");
+           padding-top: 0.5rem;
+           padding-bottom: 0.5rem;
+           font-family: stencilFontFamily("body-font");
+
+           @include media-breakpoint-down("md") {
+               top: 2% !important;
+               left: 10% !important;
+               right: 10% !important;
+           }
+
+            .mcd-carousel-header {
+                padding-left: 5%;
+                margin-top: 1rem;
+            }
+
+           .mcd-carousel-text {
+                @extend .d-flex;
+                @extend .justify-content-center;
+                margin-bottom: 1rem;
+                font-size: larger;
+           }
+
+           .mcd-carousel-button {
+               @extend .float-end;
+               margin-right: 5%;
+           }
+
+           &__bottom-left {
+                bottom: 10%;
+                left: 10%;
+           }
+
+           &__bottom-right {
+               bottom: 10%;
+               right: 10%
+           }
+
+           &__top-right {
+               top: 10%;
+               right: 10%;
+           }
+
+           &__top-left {
+               top: 10%;
+               left: 10%;
+           }
+
+           &__bottom-center {
+               width: 50%;
+               bottom: 10%;
+               left: 25%;
+               .mcd-carousel-header{
+                   padding: 0;
+                   width: 100%;
+                   text-align: center;
+               }
+               .mcd-carousel-button {
+                   @extend .float-none;
+                   margin: 0;
+                   position: relative;
+                   width: 8rem;
+                   left: calc(50% - 4rem);
+               }
+           }
+       }
+    }
+}

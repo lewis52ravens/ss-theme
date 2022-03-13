@@ -1,0 +1,14 @@
+<div class="row mb-3" data-product-attribute="set-select">
+    <label class="col-3 col-form-label" for="attribute_select_{{id}}">
+        {{this.display_name}}:
+    </label>
+    <div class="col-9">
+        <select class="form-select" name="attribute[{{this.id}}]" id="attribute_select_{{id}}" {{#if required}}required{{/if}}>
+            {{#each this.values}}
+                <option data-product-attribute-value="{{id}}" value="{{id}}" {{#if selected}}selected data-default{{/if}}>
+                    {{label}}
+                </option>
+            {{/each}}
+        </select>
+    </div>
+</div>

@@ -24,6 +24,7 @@ module.exports = {
                         plugins: [
                             '@babel/plugin-syntax-dynamic-import', // add support for dynamic imports (used in app.js)
                             'lodash', // Tree-shake lodash
+                            'transform-object-assign'
                         ],
                         presets: [
                             ['@babel/preset-env', {
@@ -31,7 +32,7 @@ module.exports = {
                                 modules: false, // Don't transform modules; needed for tree-shaking
                                 useBuiltIns: 'entry',
                                 corejs: '^3.6.5',
-                            }],
+                            }], '@babel/react'
                         ],
                     },
                 },

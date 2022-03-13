@@ -2076,5 +2076,20 @@
   },
   "i18n.PaymentButtonsContainer": {
     "default": "Buttons Container Size"
+  },
+  "i18n.AnnouncementBanner": {
+    "default": "Announcment Banner"
+  },
+  "i18n.ShowAnnouncement": {
+    "default": "Show Announcement Banner"
+  },
+  "i18n.AnnouncementText": {
+    "default": "Announcement Text"
+  },
+  "i18n.AnnouncementBgColor": {
+    "default": "Announcement Background Color"
+  },
+  "i18n.AnnouncementTextColor": {
+    "default": "Announcement Text Color"
   }
 }

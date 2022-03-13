@@ -33,7 +33,7 @@
                         <p class="cart-item-brand">{{brand.name}}</p>
                     {{/if}}
                     <h2 class="cart-item-name">
-                        <a class="cart-item-name__label" href="{{url}}">{{name}}</a>
+                        <a class="cart-item-name__label link-dark" href="{{url}}">{{name}}</a>
                     </h2>
                     {{#if release_date}}
                         <p>({{release_date}})</p>
@@ -42,8 +42,8 @@
                     {{#if options}}
                         <dl class="definitionList">
                             {{#each options}}
-                                <dt class="definitionList-key">{{name}}:</dt>
-                                <dd class="definitionList-value">
+                                <dt class="definitionList-key text-muted">{{name}}:</dt>
+                                <dd class="definitionList-value text-dark">
                                     {{#if is_file}}
                                         <a href="/viewfile.php?attributeId={{id}}&cartitem={{../id}}">{{value}}</a>
                                     {{else}}
@@ -53,6 +53,8 @@
                             {{/each}}
                         </dl>
 
+                        {{!--TODO: DESIGN A NEW VERSION OF THIS --}}
+                        {{!--
                         <a href="#"
                            data-item-edit="{{id}}"
                            data-product-id="{{product_id}}"
@@ -60,6 +62,7 @@
                         >
                             {{lang 'common.change'}}
                         </a>
+                        --}}
                     {{/if}}
 
                     {{#if type '==' 'GiftCertificate'}}

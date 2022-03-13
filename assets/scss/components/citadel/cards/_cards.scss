@@ -11,6 +11,8 @@
 //
 // -----------------------------------------------------------------------------
 
+.citadel {
+
 .card {
     &:focus-within {
         .card-figcaption {
@@ -166,4 +168,6 @@
             color: stencilColor("card--alternate-color--hover");
         }
     }
+}
+
 }

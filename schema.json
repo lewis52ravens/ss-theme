@@ -1,5 +1,207 @@
 [
   {
+    "name": "MC Design Custom Settings",
+    "settings": [
+      {
+        "type": "heading",
+        "content": "Brand Settings"
+      },
+      {
+        "type": "color",
+        "label": "Primary Dark Color",
+        "id": "mcdesign_primary_dark"
+      },
+      {
+        "type": "color",
+        "label": "Primary Light Color",
+        "id": "mcdesign_primary_light"
+      },
+      {
+        "type": "color",
+        "label": "Alternate Color 1",
+        "id": "mcdesign_alt_color_1"
+      },
+      {
+        "type": "color",
+        "label": "Alternate Color 2",
+        "id": "mcdesign_alt_color_2"
+      },
+      {
+        "type": "heading",
+        "content": "Social Media"
+      },
+      {
+        "type": "checkbox",
+        "label": "Show social media icons",
+        "force_relead": true,
+        "id": "mcdesign_show_social_media"
+      },
+      {
+        "type": "select",
+        "label": "Header Location",
+        "force_relead": true,
+        "id": "mcdesign_social_header_location",
+        "reference": "mcdesign_show_social_media",
+        "reference_default": false,
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          },
+          {
+            "label": "None (don't show in header)",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "label": "Footer Location",
+        "force_relead": true,
+        "id": "mcdesign_social_footer_location",
+        "reference": "mcdesign_show_social_media",
+        "reference_default": false,
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          },
+          {
+            "label": "None (don't show in footer)",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "Home Page"
+      },
+      {
+        "type": "checkbox",
+        "label": "Show carousel indicators",
+        "id": "mcdesign_show_carousel_indicators"
+      },
+      {
+        "type": "select",
+        "label": "Carousel label location",
+        "description": "Where would you like the label containing the carousel header, text, and button to appear?",
+        "id": "mcdesign_carousel_label_location",
+        "options": [
+          {
+            "label": "Top Left",
+            "value": "top-left"
+          },
+          {
+            "label": "Top Right",
+            "value": "top-right"
+          },
+          {
+            "label": "Bottom Left",
+            "value": "bottom-left"
+          },
+          {
+            "label": "Bottom Right",
+            "value": "bottom-right"
+          },
+          {
+            "label": "Bottom Center",
+            "value": "bottom-center"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "label": "Show image gallery",
+        "id": "mcdesign_homepage_show_gallery",
+        "force_relead": true
+      },
+      {
+        "type": "select",
+        "label": "Image Gallery Rows",
+        "id": "mcdesign_homepage_image_gallery_rows",
+        "reference": "mcdesign_homepage_show_gallery",
+        "reference_default": false,
+        "force_relead": true,
+        "options": [
+          {
+            "label": "4",
+            "value": 4
+          },
+          {
+            "label": "3",
+            "value": 3
+          },
+          {
+            "label": "2",
+            "value": 2
+          },
+          {
+            "label": "1",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "label": "Image Gallery Columns",
+        "id": "mcdesign_homepage_image_gallery_columns",
+        "reference": "mcdesign_homepage_show_gallery",
+        "reference_default": false,
+        "force_relead": true,
+        "options": [
+          {
+            "label": "4",
+            "value": 4
+          },
+          {
+            "label": "3",
+            "value": 3
+          },
+          {
+            "label": "2",
+            "value": 2
+          },
+          {
+            "label": "1",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "Products"
+      },
+      {
+        "type": "select",
+        "label": "Price Display Type",
+        "id": "mcd_price_display",
+        "options": [
+          {
+            "label": "Range (low-high)",
+            "value": "range"
+          },
+          {
+            "label": "Lowest price",
+            "value": "low"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "label": "Show Product Sort Box",
+        "id": "mcd_show_product_sort"
+      }
+    ]
+  },
+  {
     "name": "i18n.Global",
     "settings": [
       {

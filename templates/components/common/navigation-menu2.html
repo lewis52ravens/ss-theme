@@ -1,0 +1,10 @@
+<nav class="nav justify-content-center mcd-main-nav">
+    {{#each categories}}
+        <a class="nav-link link-dark {{#if is_active}} active{{/if}}" href="{{url}}" aria-label="{{name}}">{{uppercase name}}</a>
+    {{/each}}
+    {{#unless theme_settings.hide_content_navigation}}
+        {{#each pages}}
+            <a class="nav-link link-dark {{#if name '==' ../page.title}} active{{/if}}" href="{{url}}" aria-label="{{name}}">{{uppercase name}}</a>
+        {{/each}}
+    {{/unless}}
+</nav>

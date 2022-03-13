@@ -1,0 +1,43 @@
+
+<a href="#main-content" class="skip-to-main-link">{{lang 'header.skip_to_main'}}</a>
+<!-- Adding in any banners -->
+{{#if banners.top}}
+<div class="banners" data-banner-location="top">
+    {{#each (limit banners.top_metadata 1)}}
+    <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
+        <div data-event-type="promotion-click">
+            {{{this.content}}}
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/if}}
+<header class="mcd-header2 w-100" role="banner">
+    {{> components/common/navigation2}}
+
+    <div class="mcd-header-content">
+        {{#if page_type '===' 'default'}}
+            <h1 class="mcd-header-logo2">
+                {{> components/common/store-logo2}}
+            </h1>
+        {{else}}
+            <h1 class="mcd-header-logo2">
+                {{> components/common/store-logo2}}
+            </h1>
+        {{/if}}
+    </div>
+    <div class="navPages-container" id="menu" data-menu>
+        {{> components/common/navigation-menu2}}
+    </div>
+    {{!--
+    {{#if page_type '===' 'default'}}
+        <h1 class="header-logo header-logo--{{theme_settings.logo-position}}">
+            {{> components/common/store-logo}}
+        </h1>
+    {{else}}
+        <div class="header-logo header-logo--{{theme_settings.logo_position}}">
+            {{> components/common/store-logo}}
+        </div>
+    {{/if}}
+    --}}
+</header>

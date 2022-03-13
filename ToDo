@@ -1,0 +1,26 @@
+Re-do the "skip to main content" link using bootstrap 'visually-hidden-focusable'
+Make mobile menu text bolder (easier to read)
+Design a new widget for changing options
+
+
+Add ons:
+    - Custom messaging (only boards):
+        Character limit: 15
+    - Card (boards and boxes):
+        ?
+Shop:
+    - Boards
+    - Boxes
+    - Cups
+
+Future:
+    Each board has allergy information attached
+    - Occasions:
+        - All Occasions
+        - Seasonal (limited time items)
+        - Birthdays
+    Services drop down:
+        - Custom Orders
+        - Grazing tables
+        - Corporate Events
+    About Us

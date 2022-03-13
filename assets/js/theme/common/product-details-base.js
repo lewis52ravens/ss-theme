@@ -38,6 +38,8 @@ export default class ProductDetailsBase {
         Wishlist.load(this.context);
         this.getTabRequests();
 
+        this.additionalPrice = 0;
+
         $('[data-product-attribute]').each((__, value) => {
             const type = value.getAttribute('data-product-attribute');
 
@@ -188,6 +190,7 @@ export default class ProductDetailsBase {
                 $input: $('[name=qty\\[\\]]', $scope),
             },
             $bulkPricing: $('.productView-info-bulkPricing', $scope),
+            $productDescription: $('.mcd-product-description-text', $scope),
         };
     }
 
@@ -211,7 +214,14 @@ export default class ProductDetailsBase {
      */
     updateView(data, content = null) {
         const viewModel = this.getViewModel(this.$scope);
+        console.log('updateView:');
+        console.log(data);
+        console.log('context:');
+        console.log(this.context);
 
+        if (data.v3_variant_id) {
+            this.updateDescription(viewModel, data.v3_variant_id);
+        }
         this.showMessageBox(data.stock_message || data.purchasing_message);
 
         if (isObject(data.price)) {
@@ -272,17 +282,123 @@ export default class ProductDetailsBase {
         }
     }
 
+    updateDescription(viewModel, variantId) {
+        //let viewModel = this.getViewModel('scope');
+        if (this.variantInfo && this.variantInfo.length > 0) {
+            let newVariant = null;
+            for (let i = 0; i < this.variantInfo.length; i++) {
+                const variant = this.variantInfo[i];
+                if (variant.entityId == variantId) {
+                    newVariant = variant;
+                    break;
+                }
+            }
+            if (newVariant) {
+                //console.log('Description:');
+                //console.log(viewModel.$productDescription.html());
+                console.log('new variant: ');
+                console.log(newVariant);
+                const newSizes = {
+                    ssMax: newVariant.metafields.serving_size_max,
+                    ssMin: newVariant.metafields.serving_size_min,
+                    cheeseQty: newVariant.metafields.cheese_qty,
+                    meatQty: newVariant.metafields.meat_qty,
+                    vWidth: newVariant.width,
+                    vHeight: newVariant.height,
+                    vDepth: newVariant.depth,
+                    vUnit: newVariant.unit,
+                    vSize: newVariant.options.Size,
+                };
+                /*
+                viewModel.$productDescription.find('[data-replace]').text((index, oldText) => {
+                    const replace = $(this).data('replace');
+                    const rr = this.dataset;
+                    if (replace == 'serving_size' && sizes.ssMax && sizes.ssMin) {
+                        return `${sizes.ssMin} - ${sizes.ssMax}`;
+                    } else if (replace == 'size_w' && sizes.vWidth) {
+                        return `${sizes.vWidth} ${sizes.vUnit}`;
+                    } else if (replace == 'size_l' && sizes.vDepth) {
+                        return `${sizes.vDepth} ${sizes.vUnit}`;
+                    } else if (replace == 'size_h' && sizes.vHeight) {
+                        return `${sizes.vHeight} ${sizes.vUnit}`;
+                    } else if (replace == 'size_cheese' && sizes.cheeseQty) {
+                        return sizes.cheeseQty;
+                    } else if (replace == 'size_meat' && sizes.meatQty) {
+                        return sizes.meatQty;
+                    } else if (replace == 'size' && sizes.vSize) {
+                        return sizes.vSize;
+                    } else {
+                        return oldText;
+                    }
+                });
+                */
+               viewModel.$productDescription.find('[data-replace]').each((index, element) => {
+                const replace = $(element).data('replace');
+                if (replace == 'serving_size' && newSizes.ssMax && newSizes.ssMin) {
+                    $(element).text(`${newSizes.ssMin} - ${newSizes.ssMax}`);
+                } else if (replace == 'size_w' && newSizes.vWidth) {
+                    $(element).text(`${newSizes.vWidth} ${newSizes.vUnit}`);
+                } else if (replace == 'size_l' && newSizes.vDepth) {
+                    $(element).text(`${newSizes.vDepth} ${newSizes.vUnit}`);
+                } else if (replace == 'size_h' && newSizes.vHeight) {
+                    $(element).text(`${newSizes.vHeight} ${newSizes.vUnit}`);
+                } else if (replace == 'size_cheese' && newSizes.cheeseQty) {
+                    $(element).text(newSizes.cheeseQty);
+                } else if (replace == 'size_meat' && newSizes.meatQty) {
+                    $(element).text(newSizes.meatQty);
+                } else if (replace == 'size' && newSizes.vSize) {
+                    $(element).text(newSizes.vSize);
+                } 
+               });
+               /*
+                (function (viewModel, sizes) {
+                    viewModel.$productDescription.find('[data-replace]').text((_this, index, oldText) => {
+                        //const replace = $(this).data('replace');
+                        //const rr = this.dataset;
+                        
+                        if ($(this).data('replace') == 'serving_size' && sizes.ssMax && sizes.ssMin) {
+                            return `${sizes.ssMin} - ${sizes.ssMax}`;
+                        } else if ($(this).data('replace') == 'size_w' && sizes.vWidth) {
+                            return `${sizes.vWidth} ${sizes.vUnit}`;
+                        } else if ($(this).data('replace') == 'size_l' && sizes.vDepth) {
+                            return `${sizes.vDepth} ${sizes.vUnit}`;
+                        } else if ($(this).data('replace') == 'size_h' && sizes.vHeight) {
+                            return `${sizes.vHeight} ${sizes.vUnit}`;
+                        } else if ($(this).data('replace') == 'size_cheese' && sizes.cheeseQty) {
+                            return sizes.cheeseQty;
+                        } else if ($(this).data('replace') == 'size_meat' && sizes.meatQty) {
+                            return sizes.meatQty;
+                        } else if ($(this).data('replace') == 'size' && sizes.vSize) {
+                            return sizes.vSize;
+                        } else {
+                            return oldText;
+                        }
+                    });
+                })(viewModel, newSizes);
+                */
+            }
+        }
+    }
+
     /**
      * Update the view of price, messages, SKU and stock options when a product option changes
      * @param  {Object} data Product attribute data
      */
     updatePriceView(viewModel, price) {
         this.clearPricingNotFound(viewModel);
+        var priceObject = price.with_tax ? price.with_tax : price.without_tax;
+        if (this.additionalPrice > 0) {
+            const oldVal = priceObject.value;
+            const newVal = oldVal + this.additionalPrice;
+            const newFormatted = new Intl.NumberFormat('en-US', {style: 'currency', currency: priceObject.currency}).format(newVal);
+            priceObject.formatted = newFormatted;
+            priceObject.value = newVal;
+        }
 
         if (price.with_tax) {
             const updatedPrice = price.price_range ?
                 `${price.price_range.min.with_tax.formatted} - ${price.price_range.max.with_tax.formatted}`
-                : price.with_tax.formatted;
+                : priceObject.formatted;
             viewModel.priceLabel.$span.show();
             viewModel.$priceWithTax.html(updatedPrice);
         }
@@ -290,7 +406,7 @@ export default class ProductDetailsBase {
         if (price.without_tax) {
             const updatedPrice = price.price_range ?
                 `${price.price_range.min.without_tax.formatted} - ${price.price_range.max.without_tax.formatted}`
-                : price.without_tax.formatted;
+                : priceObject.formatted;
             viewModel.priceLabel.$span.show();
             viewModel.$priceWithoutTax.html(updatedPrice);
         }

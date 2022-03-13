@@ -1,0 +1,10 @@
+// Colors
+
+$light:                             stencilColor("mcdesign_primary_light");
+$dark:                              stencilColor("mcdesign_primary_dark");
+$text-muted:                        stencilColor("color-textSecondary");
+//$dropdown-bg:                       $light;
+// Typography
+
+$font-family-sans-serif:        stencilFontFamily("body-font"), Arial, Helvetica, sans-serif;
+$headings-font-family:          stencilFontFamily("headings-font"), Arial, Helvetica, sans-serif;

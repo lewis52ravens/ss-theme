@@ -1,0 +1,8 @@
+{{#if product.description}}
+    <h3>{{lang 'products.description'}}</h3>
+    <div class="mcd-product-description-text" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+        {{{product.description}}}
+    </div>
+{{/if}}
+
+{{!-- Product Warrenty... --}}

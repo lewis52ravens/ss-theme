@@ -1,0 +1,28 @@
+.dropdown {
+    ul.mcdesign-cart-dropdown-content {
+        //background-color: stencilColor("mcdesign_primary_light") !important;
+    }
+}
+
+.mcd-preview-price {
+
+    &--discounted {
+        text-decoration: line-through;
+    }
+}
+
+// Concept taken from: https://stackoverflow.com/a/35919373
+.mcd-cart-thumbnail{
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 100%;
+
+    img{
+        position: absolute;
+        max-width: 100%;
+        max-height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+}

@@ -1,0 +1,25 @@
+
+ol.breadcrumb {
+
+    overflow: visible;
+    text-align: center;
+
+    .breadcrumb-item {
+        display: inline-block;
+        float: none;
+        margin-right: 0.25rem;
+
+        //color: stencilColor("mcdesign_alt_color_1") !important;
+
+        > .breadcrumb-label {
+            color: stencilColor("mcdesign_alt_color_1");
+        }
+
+        &.active {
+            > .breadcrumb-label {
+                cursor: pointer;
+                font-weight: 700;
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+<div class="card mb-1">
+    <div class="row g-0">
+        <div class="col-md-3">
+            <div class="mcd-cart-thumbnail">
+                {{> components/common/responsive-img
+                    image=product.image
+                    fallback_size=../theme_settings.productthumb_size
+                    lazyload=../theme_settings.lazyload_mode
+                    default_image=../theme_settings.default_image_product
+                    class="img-fluid rounded-start"
+                }}
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <h6 class="card-title ms-3"><a class="card-link" href="{{product.url}}">{{product.name}}</a></h6>
+                <div class="row g-1 ms-2">
+                    <div class="col-md-4 me-auto">
+                        <p class="card-text">
+                            <span class="mcd-preview-price{{#if product.price_discounted}}--discounted{{/if}}">{{product.price.formatted}}</span>
+                            {{#if product.price_discounted}}
+                                <span class="mcd-preview-price">{{product.price_discounted.formatted}}</span>
+                            {{/if}}
+                        </p>
+
+                    </div>
+                    <div class="col-md-3">
+                        <span class="card-text">{{product.quantity}}</span>
+                        <button type="button" class="link-danger mcdesign-cart-remove"
+                            data-remove-itemid="{{product.id}}"
+                            aria-label="Remove"
+                        >
+                            <i class="bi bi-x-circle-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+{{!--
+Objects:
+    settings
+    show_compare
+    show_rating
+    theme_settings
+    customer
+    event
+    position
+    price_style = 'range' or 'low'
+--}}
+{{log this}}
+<article class="card h-100 text-center border-0">
+    {{#if out_of_stock_message '!=' null}}
+        {{!-- todo: Add a Sold Out message --}}
+    {{/if}}
+    <a href="{{url}}" aria-label="{{> components/products/product-info}}">
+        {{> components/common/responsive-img
+            image=image
+            class="card-img-top"
+            fallback_size=theme_settings.productgallery_size
+            lazyload=theme_settings.lazyload_mode
+            default_image=theme_settings.default_image_product
+        }}
+    </a>
+    <div class="card-body px-0 pb-0 pt-1">
+        <h4 class="card-title card-link mcd-card-product-name">
+            <a aria-label="{{> components/products/product-info}}" href="{{url}}">{{name}}</a>
+        </h4>
+        <h6 class="card-subtitle" data-test-info-type="price">
+            {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                {{> components/products/price price=price}}
+            {{else}}
+                {{> components/common/login-for-pricing}}
+            {{/or}}
+        </h6>
+    </div>
+</article>

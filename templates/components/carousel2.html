@@ -1,0 +1,24 @@
+<section class="carousel carousel-dark slide" id="homePageCarousel" data-bs-ride="carousel" data-bs-interval={{multiply carousel.swap_frequency 1000}}>
+    {{#if indicators}}
+        <div class="carousel-indicators">
+            {{#forEach carousel.slides}}
+                <button type="button" data-bs-target="#homePageCarousel" data-bs-slide-to="{{subtract index 1}}" {{#if isFirst}}class="active" aria-current="true"{{/if}} aria-label="Slide {{index}}"></button> 
+            {{/forEach}}
+        </div>
+    {{/if}}
+    <div class="carousel-inner mcd-carousel">
+        {{#forEach carousel.slides}}
+            {{> components/carousel-slide2 slide=index active=isFirst content=this label_location=../theme_settings.mcdesign_carousel_label_location}}
+        {{/forEach}}
+    </div>
+    {{#if arrows}}
+        <button class="carousel-control-prev mcd-carousel-control" type="button" data-bs-target="#homePageCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next mcd-carousel-control" type="button" data-bs-target="#homePageCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    {{/if}}
+</section>

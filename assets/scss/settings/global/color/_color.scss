@@ -36,6 +36,10 @@ $color-highlight:                   stencilColor("color-highlight");
 $color-highlightDarker:             stencilColor("color-highlightDarker");
 $color-highlightDark:               stencilColor("color-highlightDark");
 
+// MCDesign Colors
+// -----------------------------------------------------------------------------
+$mcd-color-footer-background:       stencilColor("mcdesign_alt_color_1");
+$mcd-color-footer-bg-lighter:       scale-color($mcd-color-footer-background, $lightness: 10%);
 
 // States
 // -----------------------------------------------------------------------------
@@ -56,7 +60,8 @@ $color-warningLight:                stencilColor("color-warningLight");
 // Text
 // -----------------------------------------------------------------------------
 
-$color-textBase:                    stencilColor("color-textBase");
+//$color-textBase:                    stencilColor("color-textBase");
+$color-textBase:                    stencilColor("mcdesign_alt_color_1");
 $color-textBase-hover:              stencilColor("color-textBase--hover");
 $color-textBase-active:             stencilColor("color-textBase--active");
 
@@ -73,3 +78,10 @@ $color-textLink-active:             stencilColor("color-textLink--active");
 // -----------------------------------------------------------------------------
 $focusTooltip-textColor:            stencilColor("focusTooltip-textColor");
 $focusTooltip-backgroundColor:      stencilColor("focusTooltip-backgroundColor");
+
+
+// Bootstrap overrides
+// -----------------------------------------------------------------------------
+$light:                             stencilColor("mcdesign-primary-light");
+$dark:                              stencilColor("mcdesign-primary-dark");
+$text-muted:                        stencilColor("color-textSecondary")

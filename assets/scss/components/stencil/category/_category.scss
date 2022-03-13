@@ -9,3 +9,30 @@
 .category-header-image {
     width: 100%;
 }
+
+.mcd-category-header-image {
+    //max-height: 10rem;
+    //object-fit: contain;
+    object-fit: scale-down;
+    max-height: 150px;
+}
+
+li.mcd-product {
+    list-style: none;
+    font-family: stencilFontFamily("body-font") !important;
+
+    .card-title {
+        a {
+            font-weight: stencilFontWeight("body-font") !important;
+            color: stencilColor("color-textLink") !important;
+        }
+    }
+
+    .card-subtitle {
+        font-weight: stencilFontWeight("body-font") !important;
+    }
+}
+
+.mcd-card-product-name {
+    font-family: stencilFontFamily("body-font");
+}

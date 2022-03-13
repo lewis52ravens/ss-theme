@@ -6,6 +6,8 @@
 // 2. Create offset for the fixed position header on smaller screens.
 //
 // -----------------------------------------------------------------------------
+$bs-navbar-height: 37.2188px;
+$bs-navbar-padding: 7;
 
 @if $exportCSS--global { // 1
 
@@ -15,8 +17,10 @@
     }
 
     body {
-        padding-top: $header-height; // 2
-        @include breakpoint("medium") {
+        //padding-top: $header-height; // 2
+        //TODO: Determine the correct way to do this using bootstrap variables
+        padding-top: $bs-navbar-height + ($bs-navbar-padding * 2);
+        @include media-breakpoint-up("md") {
             padding-top: 0;
         }
     }

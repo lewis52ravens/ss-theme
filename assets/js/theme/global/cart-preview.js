@@ -24,13 +24,15 @@ export default function (secureBaseUrl, cartId) {
 
         if (!quantity) {
             $cart.addClass('navUser-item--cart__hidden-s');
+
         } else {
             $cart.removeClass('navUser-item--cart__hidden-s');
         }
 
         $('.cart-quantity')
-            .text(quantity)
-            .toggleClass('countPill--positive', quantity > 0);
+            .text(quantity > 0 ? quantity : '');
+            //.toggleClass('invisible', quantity > 0);
+            //.toggleClass('countPill--positive', quantity > 0);
         if (utils.tools.storage.localStorageAvailable()) {
             localStorage.setItem('cart-quantity', quantity);
         }

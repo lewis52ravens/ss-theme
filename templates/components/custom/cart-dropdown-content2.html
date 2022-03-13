@@ -1,0 +1,9 @@
+<p>dropdown content!</p>
+{{#if cart.items.length}}
+    {{#each (limit cart.items 4)}}
+        <li><a class="dropdown-item" href="#">Item 1</a></li>
+        {{!--{{> components/common/cart-dropdown-item2 product_name=name product_price=price.formatted}}--}}
+    {{/each}}
+{{#else}}
+    <p class="p-4 text-muted">Cart is empty</p>
+{{/if}}

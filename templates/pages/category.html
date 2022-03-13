@@ -17,42 +17,38 @@ category:
 
 {{#partial "page"}}
 
-{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
-{{#if category.image}}
-    {{> components/common/responsive-img
-        image=category.image
-        fallback_size=theme_settings.zoom_size
-        lazyload=theme_settings.lazyload_mode
-        class="category-header-image"
-    }}
-{{/if}}
-{{#unless theme_settings.hide_category_page_heading }}
-    <h1 class="page-heading">{{category.name}}</h1>
-    {{{region name="category_below_header"}}}
-{{/unless}}
-{{{category.description}}}
-<div class="page">
-    {{#if category.faceted_search_enabled}}
-        <aside class="page-sidebar" id="faceted-search-container">
-            {{> components/category/sidebar}}
-        </aside>
-    {{else if category.subcategories}}
-        <aside class="page-sidebar" id="faceted-search-container">
-            {{> components/category/sidebar}}
-        </aside>
-    {{else if category.shop_by_price}}
-        {{#if theme_settings.shop_by_price_visibility}}
-             <aside class="page-sidebar" id="faceted-search-container">
-                {{> components/category/sidebar}}
-            </aside>
-        {{/if}}
-    {{/if}}
-
-    <div class="page-content" id="product-listing-container">
-        {{> components/category/product-listing}}
-        {{{region name="category_below_content"}}}
+    {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+    <div class="container mcd-category-heading ps-0 {{#unless category.image}}pe-0{{/unless}}">
+        <div class="row align-items-center justify-content-start">
+            {{#if category.image}}
+                {{log "image"}}
+                <div class="col-lg-4 d-none d-md-flex justify-content-center">
+                    {{> components/common/responsive-img
+                        image=category.image
+                        fallback_size=theme_settings.zoom_size
+                        lazyload=theme_settings.lazyload_mode
+                        class="w-100 mcd-category-header-image"
+                    }}
+                </div>
+            {{/if}}
+            <div class="col-lg text-center {{#if category.image}}text-lg-start{{/if}}">
+                {{#unless theme_settings.hide_category_page_heading}}
+                    <h1>{{category.name}}</h1>
+                    {{{region name="category_below_header"}}}
+                {{/unless}}
+                {{{category.description}}}
+            </div>
+        </div>
     </div>
-</div>
+
+    <div class="page">
+        {{log category}}
+        <div class="page-content" id="product-listing-container">
+            {{> components/category/product-listing2}}
+            {{{region name="category_below_content"}}}
+        </div>
+    </div>
+    
 
 {{/partial}}
 {{> layout/base}}

@@ -1,0 +1,9 @@
+{{#if social_media}}
+    {{#each social_media}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{url}}" target="_blank" rel="noopener" aria-label="{{display_name}}">
+                <i class="bi bi-{{display_name}}"></i>
+            </a>
+        </li>
+    {{/each}}
+{{/if}}

@@ -1,0 +1,17 @@
+{{#partial "page"}}
+
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+<section class="page">
+    <h1 class="page-heading">{{page.title}}</h1>
+
+    <div id="custom-page" class="page-content page-content--centered">
+        <p>This is a custom page yay!</p>
+        <div id="coupondrawer"></div>
+        <p>{{{page.content}}}</p>
+    </div>
+</section>
+
+{{/partial}}
+
+{{> layout/base}}

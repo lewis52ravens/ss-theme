@@ -1,6 +1,9 @@
 __webpack_public_path__ = window.__webpack_public_path__; // eslint-disable-line
 
 import Global from './theme/global';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactThing from './components/ReactThing';
 
 const getAccount = () => import('./theme/account');
 const getLogin = () => import('./theme/auth');
@@ -52,7 +55,9 @@ const pageClasses = {
     wishlists: () => import('./theme/wishlist'),
 };
 
-const customClasses = {};
+const customClasses = {
+    custom: () => ReactDOM.render(<ReactThing />, document.querySelector('#coupondrawer')),
+};
 
 /**
  * This function gets added to the global window and then called

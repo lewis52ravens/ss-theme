@@ -29,6 +29,7 @@
     {{/if}}>
     <figure class="card-figure">
         {{#if stock_level '===' 0}}
+            {{log theme_settings.pdp_sold_out_label}}
             {{#if theme_settings.pdp_sold_out_label '===' ''}}
                 {{> components/products/product-badge
                     badge-type='sold-out'
